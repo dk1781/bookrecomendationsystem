@@ -13,20 +13,26 @@ Sistem rekomendasi buku berfungsi sebagai jembatan antara keinginan pembaca dan 
 
 ### Problem Statements
 
-Berdasarkan latar belakabg yang telah disampaikan sebelumnya, pernytaan masalah yang akan diselesaikan pada proyek ini adalah:
-- Kebiasaan (habbit) apa yang paling berpengaruh terhadap kelulusan siswa?
-- Apa model terbaik yang bisa memprediksi kelulusan siswa berdasarkan kebiasaannya?
+Berdasarkan latar belakang yang telah disampaikan sebelumnya, pernytaan masalah yang akan diselesaikan pada proyek ini adalah:
+-  Jumlah buku yang sangat banyak, membuat pengguna kesulitan menemukan buku yang relevan dengan minat, kebutuhan, atau tingkat pemahaman mereka.
 
 ### Goals
 
 Berdasarkan Problem Statement tersebut tujuan yang harus dicapai adalah:
--  Mengidentifikasi faktor dominan yang memengaruhi kelulusan.
--  Membangun model terbaikuntuk prediksi kelulusan siswa yang memiliki akurasi tertinggi.
+-  Memberikan rekomendasi buku berdasarkan fitur yang serupa dengan buku yang diinput pengguna.
+-  Membangun sistem rekomendasi yang merekomendasikan buku populer atau berkualitas tinggi (berdasarkan ulasan/rating pengguna) yang belum pernah dibaca oleh pengguna, tetapi diminati oleh pengguna lain dengan preferensi serupa.
+
+
 ### Solution statements
-- Melakukan proses EDA untuk menemukan fitur yang paling mempengaruhi kelulusan siswa.
-- Membangun 4 model Machine Learning yaitu Logistic Regression, Decission Tree,Random Forest, dan Extreme Gradient Boosting
-- Menerapkan Feature selection dan crossvalidation untuk meningkatkan performa model dan menghindari overfitting
-- Menggukur performa model menggunakan f1 score, precission, recall, dan confussion matrix, untuk memilih model terbaik berdasarkan akurasi tertinggi.
+1. Mengimplementasikan Content-Based Filtering
+
+	Menggunakan teknik cosine similarity untuk menghitung kemiripan antar buku berdasarkan fitur seperti genre.
+2. Mengimplementasikan Collaborative Filtering
+   
+	Membangun model yang mempelajari pola preferensi pengguna dari riwayat baca atau rating yang diberikan, untuk memprediksi buku yang mungkin disukai pengguna berdasarkan kesamaan preferensi dengan pengguna lain.
+
+
+
 
 ## Data Understanding
 Dataset yang digunakan berasal dari kaggle yang dapat diakses pada [Kaggle](https://www.kaggle.com/datasets/jayaantanaath/student-habits-vs-academic-performance/data). Dengan 1.000 catatan siswa sintetis dan 16 fitur termasuk jam belajar, pola tidur, penggunaan media sosial, kualitas diet, kesehatan mental, dan nilai ujian akhir. 1000 baris dan 16 kolom.
