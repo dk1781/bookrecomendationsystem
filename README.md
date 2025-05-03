@@ -89,21 +89,34 @@ Dataset yang digunakan berasal dari kaggle yang dapat diakses pada [Kaggle](http
 ## Data Preparation
 - Ambil hanya baris dengan kode en pada kolom language.
   	Untuk memudahkan saat memberi rekomendasi jadi hanya yang berbahasa inggris saja
-- Delete duplicated isbn
-  	karena isbn merupakan kode unik tiap buku maka jika ada isbn yang sama maka itu adalah buku yang sama
 - Handle Missing Value
   	 Missing value pada kolom setiap kolom kita drop
 - Ambil sample data
 	Data hanya diambil sebanyak 30000 baris untuk memudahkan dan mempercepat komputasi karena sumber daya komputasi yang tidak mencukupi.
- 
-- Membuat variabel preperation 
-	Berisi dataframe dengan kolom untuk membangun model sistem rekomendasi
+- Persiapan Content based filtering
+  	- Membuat variabel preperation dengan drop duplicates pada isbn dan book_title
+		
+ 	 	Berisi dataframe yang diperlukan untuk membangun model sistem rekomendasi, isbn dan book_title yang sama akan didrop agar tidak muncul berulang saat pemberian rekomendasi. Lalu mendrop data yang kosong
+	- Mengambil hanya kolom yang diperlukan
+
+   		Mengambil hanya kolom yang diperlukan untuk Contentbased filtering isbn,book-title dan category
+ 	- Tfidf vectorizer
+
+  	    Mengubah isi teks dari kolom kategori kebentuk numerik vektor untuk merepresentasikan nilainya. TF-IDF mengukur pentingnya suatu kata dalam dokumen berdasarkan frekuensi kemunculan kata tersebut dalam dokumen dan inversi frekuensi kemunculan kata tersebut dalam seluruh koleksi dokumen.
+- Persiapan Collaborative filtering
+  	- Encoded user_id dan isbn
+
+  	  	user id dan isbn diencode agar memudahkan dan jadi lebih berurutan
+  	- Split dataset
+
+   		Dataset di split menjadi dua untuk training dan validasi
 
 ## Modeling
 
 ### **Content Based Filtering**
 
 Content Based Filtering merekomendasikan konten bedasarkan karakteristik konten itu. Jika dianalisis dari atribut setiap konten, seperti genre, penulis, atau topik, konten jenis ini merekomendasikan konten bedasarkan penggunanya.[3] 
+Pada Content based filtering ini digunakan **cosines similiarity**. **Cosines similiarity**  akan menghitung menghitung derajat kesamaan(similiarity degree) antara kategori dari vektor yang dihasilkan oleh tfidf dengan cara menghitung nilai cosine dari sudut yang dibentuk oleh kedua vektor
 
 **Kelebihan**:
 	
@@ -119,11 +132,7 @@ Content Based Filtering merekomendasikan konten bedasarkan karakteristik konten 
 	
  -  Tidak dapat memperoleh konten inti objek
 	    
-**Tahapan yang dilakukan**
-	
- - Vektorisasi Tfidf. Term Frequency-Inverse Document Frequency. Ia bertujuan untuk mengukur seberapa penting suatu kata terhadap kata-kata lain dalam dokumen. Kategori buku diubah menjadi vektor.
 
- - Hitung cosine similiarity. menghitung derajat kesamaan(similiarity degree) antara kategori
 
 **Hasil Top 10 Recomendation** 
 
@@ -135,7 +144,9 @@ Buku yang dijadikan acuan adalah 'Accidental City: The Transformation of Toronto
 Model memprediksi buku dengan kategori yang sama
 
 ### **Collaborative Filtering**
-Ide inti dari algoritma rekomendasi collaborative filtering adalah bahwa "pelanggan dengan preferensi yang sama mungkin memiliki minat serupa lainnya"
+Ide inti dari algoritma rekomendasi collaborative filtering adalah bahwa "pelanggan dengan preferensi yang sama mungkin memiliki minat serupa lainnya". Model RecommenderNet mengimplementasikan Collaborative Filtering (CF) berbasis Neural Network, yang menggabungkan konsep Matrix Factorization dengan pendekatan Deep learning. Skema ini cocok untuk memprediksi preferensi pengguna terhadap item (dalam kasus ini, buku) berdasarkan interaksi historis. Model ini bertujuan memprediksi rating atau probabilitas interaksi pengguna-item.
+
+
 	
  **Kelebihan**:
  
@@ -158,7 +169,7 @@ Model merekomendasikan buku berdasarkan buku yang telah dibaca dan diberi rating
 
 
 ### Content Based Filtering
-   Me
+   
 **_Precision_** mengukur seberapa baik model menghindari positif palsu (false positives, FP) [4]. Pada model sistem rekomendasi **Contentbased filtering** evaluasi yang digunakan adalah precission dengan formula
   Precision = $\displaystyle \frac{\text{jumlah rekomendasi buku yang relevan}}{\text{jumlah item yang direkomendasikan}}$
   Pada Hasil rekomendasi model contentbased filtering didapat
